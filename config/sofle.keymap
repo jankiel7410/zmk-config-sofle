@@ -15,6 +15,16 @@
 #define RAISE 2
 #define ADJUST 3
 
+rpi: require_prior_idle {
+    compatible = "zmk,behavior-hold-tap";
+    #binding-cells = <2>;
+    flavor = "tap-preferred";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <200>;
+    require-prior-idle-ms = <125>;
+    bindings = <&kp>, <&kp>;
+};
+
 / {
 
    // Activate ADJUST layer by pressing raise and lower
@@ -37,11 +47,11 @@
 // | SHIFT |  Z  |  X  |  C   |  D   |  V   |  MUTE  |  |       |  K   |  H    |  ,    |  .   |   /   | SHIFT |
 //               | GUI | ALT  | CTRL | LOWER|  ENTER |  | SPACE | RAISE| CTRL  | ALT   | GUI  |
             bindings = <
-&kp GRAVE &kp N1 &kp N2   &kp N3   &kp N4    &kp N5                      &kp N6 &kp N7    &kp N8    &kp N9   &kp N0   &none
-&kp ESC   &kp Q  &kp W    &kp F    &kp P     &kp B                       &kp J  &kp L     &kp U     &kp Y    &kp SQT  &kp BSPC
-&kp TAB   &kp A  &kp R    &kp S    &kp T     &kp G                       &kp M  &kp N     &kp E     &kp I    &kp O    &kp SEMI
-&kp LSHFT &kp Z  &kp X    &kp C    &kp D     &kp V  &kp C_MUTE &none     &kp K  &kp H     &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-                 &kp LGUI &kp LALT &kp LCTRL &mo LOWER  &kp RET    &kp SPACE &mo RAISE  &kp RCTRL &kp RALT  &kp RGUI
+&kp GRAVE &kp N1 &kp N2  &kp N3      &kp N4       &kp N5                         &kp N6 &kp N7    &kp N8    &kp N9   &kp N0   &none
+&kp ESC   &kp Q  &kp W   &kp F       &kp P        &kp B                          &kp J  &kp L     &kp U     &kp Y    &kp SQT  &kp BSPC
+&kp TAB   &rpi LGUI A    &rpi LALT R &rpi LCTRL S &rpi LSHIFT T &kp G            &kp M  &rpi RCTRL N &rpi RALT E &rpi RGUI I &rpi RSHFT O &kp SEMI
+&kp LSHFT &kp Z  &kp X   &kp C       &kp D        &kp V         &kp C_MUTE &none &kp K  &kp H     &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+                 &kp LGUI &kp LALT   &kp LCTRL    &mo LOWER     &kp RET    &kp SPACE &mo RAISE  &kp RCTRL &kp RALT  &kp RGUI
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
